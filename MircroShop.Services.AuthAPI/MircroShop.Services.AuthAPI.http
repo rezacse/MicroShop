@@ -1,0 +1,6 @@
+@MircroShop.Services.AuthAPI_HostAddress = http://localhost:5220
+
+GET {{MircroShop.Services.AuthAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

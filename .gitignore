@@ -3,3 +3,11 @@
 ################################################################################
 
 /.vs
+/MicroShop.Services.CouponAPI/bin
+/MicroShop.Services.CouponAPI/obj
+/MicroShop.Services.EmailAPI/bin
+/MicroShop.Services.EmailAPI/obj
+/MircoShop.MessageBus/bin
+/MircoShop.MessageBus/obj
+/MircroShop.Services.AuthAPI/bin
+/MircroShop.Services.AuthAPI/obj
