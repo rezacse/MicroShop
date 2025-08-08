@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using MicroShop.Services.AuthAPI.MessageSender;
+using Microsoft.AspNetCore.Identity;
 using MircroShop.Services.AuthAPI.Models;
 using MircroShop.Services.AuthAPI.Tables;
 
-namespace MircroShop.Services.AuthAPI
+namespace MicroShop.Services.AuthAPI.Services
 {
     public interface IUserService
     {
@@ -18,19 +19,26 @@ namespace MircroShop.Services.AuthAPI
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly ITokenFactory tokenFactory;
         private readonly IUserRepository userRepository;
+        private readonly IAppMessageSender messageSender;
+        private readonly string queueName;
 
         public UserService(
+            IConfiguration configuration,
             ILogger<UserService> logger,
             UserManager<User> userManager,
             RoleManager<IdentityRole> roleManager,
             ITokenFactory tokenFactory,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IAppMessageSender messageSender)
         {
             this.logger = logger;
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.tokenFactory = tokenFactory;
             this.userRepository = userRepository;
+            this.messageSender = messageSender;
+
+            queueName = configuration.GetValue<string>("RabbitMQ:QueueName") ?? string.Empty;
         }
 
 
@@ -47,6 +55,14 @@ namespace MircroShop.Services.AuthAPI
                 }
 
                 await AssignRole(req.Email, "CUSTOMER");
+
+                var body = new
+                {
+                    Name = req.Name,
+                    Email = req.Email,
+                };
+
+                await messageSender.SendMessage(queueName, body);
 
                 return new ResponseDto(true, "Registered Successfully");
 

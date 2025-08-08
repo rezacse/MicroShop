@@ -4,13 +4,6 @@ using System.Text;
 
 namespace MicroShop.Services.EmailAPI.Messaging
 {
-    public interface IServiceBusConsumer
-    {
-        Task Start();
-        Task Stop();
-    }
-
-
     public class ServiceBusConsumer : IServiceBusConsumer
     {
         private readonly string? connectionString;

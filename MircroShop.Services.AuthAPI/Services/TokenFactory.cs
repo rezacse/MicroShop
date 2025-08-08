@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace MircroShop.Services.AuthAPI;
+namespace MicroShop.Services.AuthAPI.Services;
 
 public interface ITokenFactory
 {

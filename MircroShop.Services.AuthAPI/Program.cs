@@ -1,6 +1,7 @@
+using MicroShop.Services.AuthAPI.MessageSender;
+using MicroShop.Services.AuthAPI.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MircroShop.Services.AuthAPI;
 using MircroShop.Services.AuthAPI.Data;
 using MircroShop.Services.AuthAPI.Models;
 using MircroShop.Services.AuthAPI.Tables;
@@ -25,6 +26,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITokenFactory, TokenFactory>();
+builder.Services.AddScoped<IAppMessageSender, AppMessageSender>();
+
 
 var app = builder.Build();
 

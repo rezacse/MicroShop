@@ -11,3 +11,5 @@
 /MircoShop.MessageBus/obj
 /MircroShop.Services.AuthAPI/bin
 /MircroShop.Services.AuthAPI/obj
+/MicroShop.Gateway.Ocelot/bin/Debug/net8.0
+/MicroShop.Gateway.Ocelot/obj

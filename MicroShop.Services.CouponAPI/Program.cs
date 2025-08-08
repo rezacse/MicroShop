@@ -1,7 +1,6 @@
-using AutoMapper;
 using MicroShop.Services.CouponAPI;
 using MicroShop.Services.CouponAPI.Data;
-using Microsoft.AspNetCore.Hosting;
+using MicroShop.Services.CouponAPI.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +24,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICouponRepository, CouponRepository>();
 builder.Services.AddScoped<ICouponService, CouponService>();
 
+builder.AddAppAuthetication();
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -36,6 +39,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

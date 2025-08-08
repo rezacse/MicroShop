@@ -21,12 +21,12 @@
 
         private static void OnStop()
         {
-            serviceBusConsumer.Start();
+            serviceBusConsumer?.Start();
         }
 
         private static void OnStart()
         {
-            serviceBusConsumer.Stop();
+            serviceBusConsumer?.Stop();
         }
     }
 }

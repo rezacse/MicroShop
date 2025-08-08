@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MircroShop.Services.AuthAPI.Data;
 
-namespace MircroShop.Services.AuthAPI;
+namespace MicroShop.Services.AuthAPI.Services;
 
 public interface IUserRepository
 {

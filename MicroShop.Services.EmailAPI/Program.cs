@@ -15,12 +15,23 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IServiceBusConsumer, ServiceBusConsumer>();
-builder.Services.AddSingleton<IEmailService, EmailSerivce>();
+
+builder.Services.AddTransient<ILoggerFactory, LoggerFactory>();
+//builder.Services.AddSingleton<IServiceBusConsumer, ServiceBusConsumer>();
+
+//var optionBuilder = new DbContextOptionsBuilder<EmailDbContext>();
+//builder.Services.AddSingleton(new EmailRepository(optionBuilder.Options));
+builder.Services.AddTransient<IEmailRepository, EmailRepository>();
+builder.Services.AddTransient<IEmailService, EmailSerivce>();
+//builder.Services.AddSingleton<ILogger>();
+//builder.Services.AddSingleton(new EmailSerivce());
+builder.Services.AddHostedService<RabbitMqConsumer>();
+
+//builder.Services.AddSingleton<IServiceBusConsumer, RabbitMqConsumer>();
 
 var app = builder.Build();
 
-app.UseServiceBusConsumer();
+//app.UseServiceBusConsumer();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

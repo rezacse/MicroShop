@@ -1,10 +1,11 @@
+using MicroShop.Services.AuthAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using MircroShop.Services.AuthAPI.Models;
 
-namespace MircroShop.Services.AuthAPI.Controllers
+namespace MicroShop.Services.AuthAPI.Controllers
 {
     [ApiController]
-    [Route("api/auth")]
+    [Route("api/v1/auth")]
     public class AuthController : ControllerBase
     {
 
@@ -19,7 +20,7 @@ namespace MircroShop.Services.AuthAPI.Controllers
         }
 
 
-        [HttpPost("register")]
+        [HttpPost("signup")]
         public async Task<IActionResult> Register(RegisterDto req)
         {
             var resp = await userService.Register(req);

@@ -1,0 +1,19 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "MicroShop.Services.EmailAPI\\MicroShop.Services.EmailAPI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "MircroShop.Services.AuthAPI\\MicroShop.Services.AuthAPI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "MicroShop.Gateway.Ocelot\\MicroShop.Gateway.Ocelot.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
