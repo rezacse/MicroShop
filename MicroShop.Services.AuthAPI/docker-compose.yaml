@@ -1,0 +1,7 @@
+version: "3"
+services:
+  auth-api:
+    restart: on-failure #"no", always, unless-stopped
+    build: .
+    ports:
+      - "8083:8083"
