@@ -21,6 +21,7 @@ namespace MicroShop.Services.AuthAPI.Services
         private readonly IUserRepository userRepository;
         private readonly IAppMessageSender messageSender;
         private readonly string queueName;
+        private readonly string topicName;
 
         public UserService(
             IConfiguration configuration,
@@ -39,6 +40,7 @@ namespace MicroShop.Services.AuthAPI.Services
             this.messageSender = messageSender;
 
             queueName = configuration.GetValue<string>("RabbitMQ:QueueName") ?? string.Empty;
+            topicName = configuration.GetValue<string>("RabbitMQ:TopicName") ?? string.Empty;
         }
 
 
@@ -62,7 +64,8 @@ namespace MicroShop.Services.AuthAPI.Services
                     Email = req.Email,
                 };
 
-                await messageSender.SendMessage(queueName, body);
+                //await messageSender.SendMessage(queueName, body);
+                await messageSender.SendTopic(topicName, body);
 
                 return new ResponseDto(true, "Registered Successfully");
 

@@ -25,7 +25,8 @@ builder.Services.AddTransient<IEmailRepository, EmailRepository>();
 builder.Services.AddTransient<IEmailService, EmailSerivce>();
 //builder.Services.AddSingleton<ILogger>();
 //builder.Services.AddSingleton(new EmailSerivce());
-builder.Services.AddHostedService<RabbitMqConsumer>();
+builder.Services.AddHostedService<SignupQueueConsumer>();
+builder.Services.AddHostedService<OrderTopicConsumer>();
 
 //builder.Services.AddSingleton<IServiceBusConsumer, RabbitMqConsumer>();
 

@@ -5,27 +5,23 @@ using RabbitMQ.Client.Events;
 
 namespace MicroShop.Services.EmailAPI.Messaging
 {
-    public class RabbitMqConsumer : BackgroundService//, IServiceBusConsumer
+    public class SignupQueueConsumer : BackgroundService//, IServiceBusConsumer
     {
         private readonly IServiceProvider serviceProvider;
         private readonly ILogger logger;
-        //private readonly IEmailService emailService;
         private readonly ConnectionFactory factory;
-        //private readonly IServiceScopeFactory scopeFactory;
-        private readonly string hostName;
-        private readonly string username;
-        private readonly string password;
+        
         public readonly string queueName;
 
-        public RabbitMqConsumer(
+        public SignupQueueConsumer(
         IServiceProvider serviceProvider,
-        ILogger<RabbitMqConsumer> logger,
+        ILogger<SignupQueueConsumer> logger,
         IConfiguration configuration
             )
         {
-            hostName = configuration.GetValue<string>("RabbitMQ:Host") ?? string.Empty;
-            username = configuration.GetValue<string>("RabbitMQ:UserName") ?? string.Empty;
-            password = configuration.GetValue<string>("RabbitMQ:Password") ?? string.Empty;
+            var hostName = configuration.GetValue<string>("RabbitMQ:Host") ?? string.Empty;
+            var username = configuration.GetValue<string>("RabbitMQ:UserName") ?? string.Empty;
+            var password = configuration.GetValue<string>("RabbitMQ:Password") ?? string.Empty;
             queueName = configuration.GetValue<string>("RabbitMQ:QueueName") ?? string.Empty;
 
 
@@ -58,8 +54,8 @@ namespace MicroShop.Services.EmailAPI.Messaging
                 stoppingToken.ThrowIfCancellationRequested();
 
 
-                IConnection connection = await factory.CreateConnectionAsync();
-                IChannel channel = await connection.CreateChannelAsync();
+                IConnection connection = await factory.CreateConnectionAsync(stoppingToken);
+                IChannel channel = await connection.CreateChannelAsync(cancellationToken: stoppingToken);
 
                 var consumer = new AsyncEventingBasicConsumer(channel);
                 consumer.ReceivedAsync += async (model, ea) =>
@@ -82,10 +78,9 @@ namespace MicroShop.Services.EmailAPI.Messaging
                     }
                 };
 
-               await channel.BasicConsumeAsync(queue: queueName, autoAck: false, consumer: consumer);
+               await channel.BasicConsumeAsync(queue: queueName, autoAck: false, consumer: consumer, cancellationToken: stoppingToken);
 
 
-                //Start();
                 logger.LogInformation("RabbitMQ Consumer started successfully.");
             }
             catch (Exception ex)
