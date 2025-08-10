@@ -21,8 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroShop.Gateway.Ocelot", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroShop.Services.AuthAPI", "MicroShop.Services.AuthAPI\MicroShop.Services.AuthAPI.csproj", "{F05CF9BB-94C2-82BA-2CBD-A1B5DE609B2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{6D81B4DA-FA81-4B71-8EC4-2D057D0F399C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,10 +47,6 @@ Global
 		{F05CF9BB-94C2-82BA-2CBD-A1B5DE609B2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F05CF9BB-94C2-82BA-2CBD-A1B5DE609B2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F05CF9BB-94C2-82BA-2CBD-A1B5DE609B2D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D81B4DA-FA81-4B71-8EC4-2D057D0F399C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D81B4DA-FA81-4B71-8EC4-2D057D0F399C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D81B4DA-FA81-4B71-8EC4-2D057D0F399C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D81B4DA-FA81-4B71-8EC4-2D057D0F399C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,7 +57,6 @@ Global
 		{88FE2392-CF63-4BBA-8E3C-CEE0695119F8} = {5D780757-96DF-4C56-9A53-671B51F77FE2}
 		{08F9CD25-41D6-4566-9D93-B719AA792507} = {30053DB0-7F2E-49DF-A49E-A8F1CE3895D1}
 		{F05CF9BB-94C2-82BA-2CBD-A1B5DE609B2D} = {5D780757-96DF-4C56-9A53-671B51F77FE2}
-		{6D81B4DA-FA81-4B71-8EC4-2D057D0F399C} = {5D780757-96DF-4C56-9A53-671B51F77FE2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6B5B0FB8-AE1E-4F6E-9925-1E4DEBAAE43F}

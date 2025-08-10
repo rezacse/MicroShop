@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "!123Admin"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - mssql_data:/var/opt/mssql
+    restart: unless-stopped
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672" # AMQP protocol (for apps)
+      - "15672:15672" # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbit
+      RABBITMQ_DEFAULT_PASS: Rabbit123!
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    restart: unless-stopped
+
+  dev-auth-api:
+    image: rezacse08/dev-auth-api
+    container_name: dev-auth-api
+    build:
+      context: .
+      dockerfile: ../../MicroShop.Services.AuthAPI/Dockerfile
+    ports:
+      - "7001:8080"
+    restart: unless-stopped
+
+volumes:
+  mssql_data:
+  rabbitmq_data:

@@ -64,8 +64,8 @@ namespace MicroShop.Services.AuthAPI.Services
                     Email = req.Email,
                 };
 
-                //await messageSender.SendMessage(queueName, body);
-                await messageSender.SendTopic(topicName, body);
+                await messageSender.SendMessage(queueName, body);
+                //await messageSender.SendTopic(topicName, body);
 
                 return new ResponseDto(true, "Registered Successfully");
 

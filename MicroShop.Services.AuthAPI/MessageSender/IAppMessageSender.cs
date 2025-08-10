@@ -58,9 +58,9 @@ namespace MicroShop.Services.AuthAPI.MessageSender
                 await connection.CloseAsync();
                 await channel.CloseAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                logger.LogError("Failed to send message to queue {QueueName}.", queueName);
+                logger.LogError( ex, "Failed to send message to queue {QueueName}.", queueName);
             }
         }
 
@@ -85,9 +85,9 @@ namespace MicroShop.Services.AuthAPI.MessageSender
                 await connection.CloseAsync();
                 await channel.CloseAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                logger.LogError($"Failed to send message to Topic {topicName}.");
+                logger.LogError( ex, $"Failed to send message to Topic {topicName}.");
             }
         }
     }

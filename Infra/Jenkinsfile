@@ -1,57 +1,92 @@
 pipeline {
     agent any
 
-    environment {
-        DOTNET_VERSION = "8.0"
-        AWS_REGION     = "us-east-1"
-        AWS_ACCOUNT_ID = "123456789012"
-        ECR_REPO       = "my-dotnet-api"
-        IMAGE_TAG      = "${env.BUILD_NUMBER}"
-        SONAR_PROJECT_KEY = "your-sonarcloud-project-key"
-        SONAR_ORG        = "your-sonarcloud-org"
-        SONAR_TOKEN      = credentials('sonarcloud-token') // Jenkins credentials
-        AWS_CREDENTIALS  = credentials('aws-access-secret') // Jenkins credentials
+    // environment {
+    //     DOTNET_VERSION = "8.0"
+    //     AWS_REGION     = "us-east-1"
+    //     AWS_ACCOUNT_ID = "123456789012"
+    //     ECR_REPO       = "my-dotnet-api"
+    //     IMAGE_TAG      = "${env.BUILD_NUMBER}"
+    //     SONAR_PROJECT_KEY = "your-sonarcloud-project-key"
+    //     SONAR_ORG        = "your-sonarcloud-org"
+    //     SONAR_TOKEN      = credentials('sonarcloud-token') // Jenkins credentials
+    //     AWS_CREDENTIALS  = credentials('aws-access-secret') // Jenkins credentials
+    // }
+
+    tools {
+        
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/your-org/your-repo.git'
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         git branch: 'main', url: 'https://github.com/your-org/your-repo.git'
+        //     }
+        // }
 
-        stage('Setup .NET') {
-            steps {
-                sh "dotnet --version || wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh && bash dotnet-install.sh --version ${DOTNET_VERSION}"
-            }
-        }
+        // stage('Setup .NET') {
+        //     steps {
+        //         sh "dotnet --version || wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh && bash dotnet-install.sh --version ${DOTNET_VERSION}"
+        //     }
+        // }
 
-        stage('Restore & Build') {
-            steps {
-                sh "dotnet restore"
-                sh "dotnet build --configuration Release"
-            }
-        }
+        // stage('Restore & Build') {
+        //     steps {
+        //         sh "dotnet restore"
+        //         sh "dotnet build --configuration Release"
+        //     }
+        // }
 
-        stage('Run Tests') {
+         stage('Build') {
             steps {
-                sh "dotnet test --no-build --verbosity normal"
-            }
-        }
-
-        stage('SonarCloud Analysis') {
-            steps {
-                withSonarQubeEnv('SonarCloud') {
-                    sh """
-                        dotnet tool install --global dotnet-sonarscanner
-                        export PATH="$PATH:/root/.dotnet/tools"
-                        dotnet sonarscanner begin /k:"${SONAR_PROJECT_KEY}" /o:"${SONAR_ORG}" /d:sonar.token="${SONAR_TOKEN}" /d:sonar.host.url="https://sonarcloud.io"
-                        dotnet build
-                        dotnet sonarscanner end /d:sonar.token="${SONAR_TOKEN}"
-                    """
+                withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
+                    script{
+                        app = docker.build("micro-shop/auth-api")
+                    }
                 }
             }
         }
+
+        stage('Push') {
+            steps{
+                script {
+                    docker.withRegistry('https://476382893012.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:aws-credentials') {
+                        app.push("latest")
+                    }
+                }
+            }
+        }
+
+        stage('Deployment') {
+            steps {
+                withKubeConfig(['credentialsId': 'kubelogin']) {
+                    sh('kubectrl delete all --all -n dev-mirco-shop-api')
+                    sh('kubectl apply -f deployment.yaml --namespce=dev-mirco-shop-api')
+                }
+            }
+        }
+
+        // stage('Run Tests') {
+        //     steps {
+        //         sh "dotnet test --no-build --verbosity normal"
+        //     }
+        // }
+
+
+
+        // stage('SonarCloud Analysis') {
+        //     steps {
+        //         withSonarQubeEnv('SonarCloud') {
+        //             sh """
+        //                 dotnet tool install --global dotnet-sonarscanner
+        //                 export PATH="$PATH:/root/.dotnet/tools"
+        //                 dotnet sonarscanner begin /k:"${SONAR_PROJECT_KEY}" /o:"${SONAR_ORG}" /d:sonar.token="${SONAR_TOKEN}" /d:sonar.host.url="https://sonarcloud.io"
+        //                 dotnet build
+        //                 dotnet sonarscanner end /d:sonar.token="${SONAR_TOKEN}"
+        //             """
+        //         }
+        //     }
+        // }
 
       //   stage('Docker Build') {
       //       steps {

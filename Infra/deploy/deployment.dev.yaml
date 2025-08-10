@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dev-auth-api-deployment
+  name: dev-micro-shop-api
 spec:
   replicas: 1
   selector:
@@ -14,9 +14,10 @@ spec:
     spec:
       containers:
         - name: dev-auth-api
-          image: rezacse08/dev-auth-api:latest
+          image: rezacse08/dev-auth-api
+          imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -29,5 +30,5 @@ spec:
   ports:
     - protocol: TCP
       port: 7001
-      targetPort: 80
+      targetPort: 8080
       nodePort: 30081
