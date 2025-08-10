@@ -2,11 +2,11 @@ pipeline {
     agent any
     stages {
         
- stage('Checkout') {
-            steps {
-                git 'https://github.com/rezacse/MicroShop.git'
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         git 'https://github.com/rezacse/MicroShop.git'
+        //     }
+        // }
 
         stage('Build Docker Compose Services') {
             steps {
