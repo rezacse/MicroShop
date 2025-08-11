@@ -30,7 +30,7 @@ services:
     image: rezacse08/dev-auth-api
     container_name: dev-auth-api
     build:
-      context: .
+      context: ../../MicroShop.Services.AuthAPI
       dockerfile: ../../MicroShop.Services.AuthAPI/Dockerfile.dev
     ports:
       - "7001:8080"
