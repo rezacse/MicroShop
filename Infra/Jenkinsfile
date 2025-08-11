@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        PATH = "/opt/homebrew/bin:/usr/local/bin:${env.PATH}"
+    }
     stages {
         
         // stage('Checkout') {
@@ -10,13 +13,13 @@ pipeline {
 
         stage('Build Docker Compose Services') {
             steps {
-                sh 'bash docker-compose -f deploy/docker-compose.dev.yml build'
+                sh 'docker-compose -f infra/deploy/docker-compose.dev.yml build'
             }
         }
 
         stage('Run Docker Compose Services') {
             steps {
-                sh 'bash docker-compose up -d' // -d for detached mode
+                sh 'docker-compose up -d' // -d for detached mode
             }
         }
     }
