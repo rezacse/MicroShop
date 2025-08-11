@@ -19,7 +19,7 @@ pipeline {
 
         stage('Run Docker Compose Services') {
             steps {
-                sh 'docker-compose up -d' // -d for detached mode
+                sh 'docker-compose -f docker-compose.dev.yml up -d' // -d for detached mode
             }
         }
     }
