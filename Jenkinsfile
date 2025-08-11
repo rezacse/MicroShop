@@ -13,7 +13,7 @@ pipeline {
 
         stage('Build Docker Compose Services') {
             steps {
-                sh 'docker-compose -f infra/deploy/docker-compose.dev.yml build'
+                sh 'docker-compose -f docker-compose.dev.yml build'
             }
         }
 

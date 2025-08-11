@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   mssql:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -30,8 +28,8 @@ services:
     image: rezacse08/dev-auth-api
     container_name: dev-auth-api
     build:
-      context: ../../MicroShop.Services.AuthAPI
-      dockerfile: ../../MicroShop.Services.AuthAPI/Dockerfile.dev
+      context: MicroShop.Services.AuthAPI
+      dockerfile: MicroShop.Services.AuthAPI/Dockerfile.dev
     ports:
       - "7001:8080"
     restart: unless-stopped
