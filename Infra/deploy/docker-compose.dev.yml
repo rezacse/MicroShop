@@ -31,7 +31,7 @@ services:
     container_name: dev-auth-api
     build:
       context: .
-      dockerfile: ../../MicroShop.Services.AuthAPI/Dockerfile
+      dockerfile: ../../MicroShop.Services.AuthAPI/Dockerfile.dev
     ports:
       - "7001:8080"
     restart: unless-stopped
